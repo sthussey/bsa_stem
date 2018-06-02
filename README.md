@@ -1,17 +1,29 @@
 # Instructions for Building BSA STEM Camp VM
 
-1. Start with the base Ubuntu 18.04 image in VMDK format. https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.vmdk
-1. Create network configuration file `network-config` according to the below template
+Start with the base Ubuntu 18.04 image in VMDK format. https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.vmdk
+
+See the `iso/boostrap` directory for examples of these files
+
+Create a generic instance metadata file `meta-data` with the below content
 
 ```
-network:
-  version: 2
-  ethernets:
-    enp0s3:
-      dhcp4: true
+instance-id: iid-local01
+local-hostname: stembase
 ```
 
-1. Create the customization configuration file `user-data` according to the below template
+Create network configuration file `network-config` according to the below template
+
+See: https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html#network-config-v2
+```
+version: 2
+ethernets:
+  enp0s3:
+    dhcp4: true
+```
+
+Create the customization configuration file `user-data` according to the below template
+
+See: https://cloudinit.readthedocs.io/en/latest/topics/examples.html
 
 ```
 #cloud-config
@@ -23,12 +35,13 @@ users:
 packages:
   - python3
   - apache2
-  - mariadb-server
-  - mariadb-client 
+  ...
 ``` 
 
-1. Create the cloud-init ISO
+Create the cloud-init ISO
 
 ```
-genisoimage -V cidata -R -J -o cidata.iso network-config user-data
+genisoimage -V cidata -R -J -o cidata.iso network-config user-data meta-data
 ```
+
+Create a VirtualBox VM. Use the Ubuntu VMDK as a hard drive image and the cloud-init ISO as a CD drive image. The VM should have one network card and at least 1 vCPU and 2GB of memory.
