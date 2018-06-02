@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: scout
+    passwd: $6$rounds=4096$ovnDJSxEla4JKP$7OEystJi28MGGNtnBtuK33BsuO3s1gx4VjwyLP2WpuoT5l7qpDnQqTwNHnH02hFm9axde5yjU3kDKK/47D3e10
+    lock_passwd: false
+
+packages:
+  - python3
+  - apache2
+  - mariadb-server
+  - mariadb-client 
