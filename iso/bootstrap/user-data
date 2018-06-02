@@ -16,4 +16,4 @@ runcmd:
   - ['git', 'clone', 'https://github.com/sthussey/bsa_stem', '/home/scout/stem']
   - ['chown', '-R', 'scout:scout', '/home/scout']
   - 'cd /home/scout/stem && git checkout 2018'
-  - 'cd /home/scout/stem/src/python && pip install -r requirements.txt'
+  - ['pip3', 'install','-r','/home/scout/stem/src/python/requirements.txt']
