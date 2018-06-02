@@ -10,7 +10,7 @@ packages:
   - mariadb-server
   - mariadb-client 
   - git
-  - pip
+  - python3-pip
 
 runcmd:
   - ['git', 'clone', 'https://github.com/sthussey/bsa_stem', '/home/scout/stem']
