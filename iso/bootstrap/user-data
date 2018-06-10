@@ -1,8 +1,12 @@
 #cloud-config
 users:
+  - default
   - name: scout
     passwd: $6$rounds=4096$ovnDJSxEla4JKP$7OEystJi28MGGNtnBtuK33BsuO3s1gx4VjwyLP2WpuoT5l7qpDnQqTwNHnH02hFm9axde5yjU3kDKK/47D3e10
     lock_passwd: false
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFhd4avyzH5w10/PkSEjIXXMNRjCmPvveZu1dRqx1EIUga0VRG+LkMM+rtvLEpl3iRbBdDQQE7/5DLKq7ALf1hoRMLP6bd9KuMDMKRsLZu/TFQwlEV2mVtKInzqG8ZNkzCnZrV/wzMbUAPPWnFVmm1IajhW+xAPqSXQuaLUo02gF9Zom08HMAdJR8LyOD1lVpFm88rCchyKO5/zER89/BBGcN2dC1md/1kCUBEo7Iz4JSnkWcvKTUSPPNvNW1kPnV/zOhdJ4pZXNULNn/SkAIMlNPcNI4LKeia25OEaJsooNvyVbxF4Sn8ZZCRgtapf+78cW0dn64YWf7uYgXvRlsf scott@LAPTOP-HAQD3QPN'
 
 packages:
   - python3
@@ -13,7 +17,6 @@ packages:
   - python3-pip
 
 runcmd:
-  - ['git', 'clone', 'https://github.com/sthussey/bsa_stem', '/home/scout/stem']
-  - ['chown', '-R', 'scout:scout', '/home/scout']
-  - 'cd /home/scout/stem && git checkout 2018'
-  - ['pip3', 'install','-r','/home/scout/stem/src/python/requirements.txt']
+  - ['git', 'clone', 'https://github.com/sthussey/bsa_stem', '/home/ubuntu/stem']
+  - 'cd /home/ubuntu/stem && git checkout 2018'
+  - ['pip3', 'install','-r','/home/ubuntu/stem/src/python/requirements.txt']
