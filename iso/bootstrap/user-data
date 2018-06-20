@@ -20,3 +20,4 @@ runcmd:
   - ['git', 'clone', 'https://github.com/sthussey/bsa_stem', '/home/ubuntu/stem']
   - 'cd /home/ubuntu/stem && git checkout 2018'
   - ['pip3', 'install','-r','/home/ubuntu/stem/src/python/requirements.txt']
+  - 'mysql -B < /home/ubuntu/stem/src/sql/make_db.sql'
