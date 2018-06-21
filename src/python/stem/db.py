@@ -27,6 +27,13 @@ get_completions_query = text(
     " AND scout_name = :scout_name;"
 )
 
+def add_requirement(merit_badge, req_id, requirement):
+    try:
+        conn = engine.connect()
+        conn.execute(add_requirement_query, merit_badge=merit_badge, req_id=req_id, req_desc=requirement)
+    finally:
+        conn.close()
+        
 def get_requirements(merit_badge):
     """Retrieve all requirements for ``merit_badge``."""
     try:

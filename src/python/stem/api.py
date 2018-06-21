@@ -25,6 +25,26 @@ class RequirementsResource(object):
             resp.status = falcon.HTTP_400
             resp.body = "Requires parameters merit_badge"
 
+    def on_post(self, req, resp):
+        """
+        Expect a body of the form:
+          {
+              "merit_badge": <merit_badge>,
+              "req_id": <req_id>,
+              "requirement" : <requirement_desc>
+          }
+        """
+        data = get_request_json(req)
+        if data and 'merit_badge' in data and 'req_id' in data and 'requirement' in data:
+            db.add_requirement(data.get('merit_badge'), data.get('req_id'), data.get('requirement'))
+            reqs = db.get_requirements(data.get('merit_badge'))
+            resp.body = json.dumps(reqs)
+            resp.content_type = 'application/json'
+            resp.status = falcon.HTTP_201
+        else:
+            resp.status = falcon.HTTP_400
+            resp.body = "Invalid request, must provide valid JSON body."
+
 class CompletionsResource(object):
 
     def on_get(self, req, resp):
@@ -66,4 +86,4 @@ class CompletionsResource(object):
             resp.status = falcon.HTTP_201
         else:
             resp.status = falcon.HTTP_400
-            resp.body = "Invalid request, must provide valid JSON body."
+            resp.body = "Invalid request, must provide valid JSON body."    
