@@ -16,13 +16,13 @@ get_requirement_query = text(
 )
 
 set_completion_query = text(
-    "INSERT INTO completion (scout_name, merit_badge, req_id, complete) "
+    "INSERT INTO completions (scout_name, merit_badge, req_id, complete) "
     "VALUES (:scout_name, :merit_badge, :req_id, :complete) "
-    "ON DUPLICATE KEY UPDATE;"
+    "ON DUPLICATE KEY UPDATE complete = values(complete);"
 )
 
 get_completions_query = text(
-    "SELECT * FROM completion "
+    "SELECT * FROM completions "
     "WHERE merit_badge = :merit_badge "
     " AND scout_name = :scout_name;"
 )
@@ -33,7 +33,7 @@ def add_requirement(merit_badge, req_id, requirement):
         conn.execute(add_requirement_query, merit_badge=merit_badge, req_id=req_id, req_desc=requirement)
     finally:
         conn.close()
-        
+
 def get_requirements(merit_badge):
     """Retrieve all requirements for ``merit_badge``."""
     try:
@@ -51,7 +51,7 @@ def get_completions(merit_badge, scout_name):
         return [dict(r) for r in rs]
     finally:
         conn.close()
-    
+
 def update_completion(merit_badge, scout_name, req_id, complete):
     """Set req_id to complete for scout_name on merit_badge."""
     try:

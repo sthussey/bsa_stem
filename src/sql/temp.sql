@@ -1,0 +1,3 @@
+use stem;
+
+show databases;
