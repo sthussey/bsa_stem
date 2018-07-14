@@ -48,6 +48,27 @@ function load() {
 
         console.log(jsonResponse);
         populateReq(jsonResponse);
+        getComp();
+    }
+    xmlhttp.send(null);
+
+}
+
+function getComp() {
+    var url = "http://localhost/completions?merit_badge=";
+    url += document.getElementById("MeritBadge").value;
+    url += "&scout_name=" + document.getElementById("ScoutName").value;
+
+	xmlhttp = new XMLHttpRequest();
+    xmlhttp.overrideMimeType("application/json");
+    xmlhttp.open("GET", url, false); // send synchronously
+    xmlhttp.onload = function() {
+        console.log(xmlhttp.responseText);
+
+        var jsonResponse = JSON.parse(xmlhttp.responseText);
+
+        console.log(jsonResponse);
+        MarkComp(jsonResponse);
     }
     xmlhttp.send(null);
 
@@ -111,4 +132,16 @@ function populateReq(jsonResponse) {
         ele.appendChild(para);
         console.log(req.req_id);
     }
+}
+
+function MarkComp(jsonResponse) {
+
+    for (var i = 0; i < jsonResponse.length; i++) {
+        var req = jsonResponse[i];
+        if (req.complete == 1) {
+            var chkbox = document.getElementById(req.req_id);
+            chkbox.checked = true;
+        }
+    }
+
 }
