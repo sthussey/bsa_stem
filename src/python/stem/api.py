@@ -86,4 +86,4 @@ class CompletionsResource(object):
             resp.status = falcon.HTTP_201
         else:
             resp.status = falcon.HTTP_400
-            resp.body = "Invalid request, must provide valid JSON body."    
+            resp.body = "Invalid request, must provide valid JSON body."
